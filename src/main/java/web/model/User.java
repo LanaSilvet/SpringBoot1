@@ -11,13 +11,8 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
-    @SequenceGenerator(name="user_generator", sequenceName = "user_seq", allocationSize = 1, initialValue = 2)
+    @SequenceGenerator(name = "user_generator", sequenceName = "user_seq", allocationSize = 1, initialValue = 2)
     private int id;
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-////    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private int id;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
@@ -28,7 +23,7 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

@@ -5,13 +5,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import web.dao.RoleDAO;
+import web.dao.UserDAO;
 import web.model.MyUserDetails;
 import web.model.Role;
 import web.model.User;
 
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
@@ -21,65 +20,56 @@ import java.util.Set;
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    @PersistenceContext
-    private EntityManager em;
+    @Autowired
+    UserDAO userDAO;
 
-//    @Autowired
-//    private RoleRepository roleRepository;
+    @Autowired
+    RoleDAO roleDAO;
 
     @Override
     public void addUser(User user) {
-//        Set<Role> roles = new HashSet<>();
-//        for (Role role : user.getRoles()) {
-//            Role roleByRole = roleRepository.findRoleByRole(role.getRole());
-//            if (roleByRole == null) {
-//                roles.add(role);
-//            } else {
-//                roles.add(roleByRole);
-//            }
-//        }
-//        user.setRoles(roles);
-        em.persist(user);
+        checkRoles(user);
+        userDAO.addUser(user);
+    }
+
+    private void checkRoles(User user) {
+        Set<Role> roles = new HashSet<>();
+        for (Role role : user.getRoles()) {
+            List<Role> roleByRole = roleDAO.getAllRoles(role);
+            if (roleByRole.isEmpty()) {
+                roles.add(role);
+            } else {
+                roles.add(roleByRole.get(0));
+            }
+        }
+        user.setRoles(roles);
     }
 
     @Override
     public User updateUser(User user) {
-//        Set<Role> roles = new HashSet<>();
-//        for (Role role : user.getRoles()) {
-//            Role roleByRole = roleRepository.findRoleByRole(role.getRole());
-//            if (roleByRole == null) {
-//                roles.add(role);
-//            } else {
-//                roles.add(roleByRole);
-//            }
-//        }
-//        user.setRoles(roles);
-        return em.merge(user);
+        checkRoles(user);
+        return userDAO.updateUser(user);
     }
+
 
     @Override
     public List<User> getAllUsers() {
-        String jpql = "SELECT user FROM User user";
-        return em.createQuery(jpql, User.class)
-                .getResultList();
+        return userDAO.getAllUsers();
     }
 
     @Override
     public User getUserById(int id) {
-        return em.find(User.class, id);
+        return userDAO.getUserById(id);
     }
 
     @Override
     public User getUserByName(String name) {
-        String jpql = "SELECT user FROM User user WHERE user.name = :name";
-        return em.createQuery(jpql, User.class)
-                .setParameter("name", name)
-                .getSingleResult();
+        return userDAO.getUserByName(name);
     }
 
     @Override
     public void deleteUser(User user) {
-        em.remove(user);
+        userDAO.deleteUser(user);
     }
 
     @Override

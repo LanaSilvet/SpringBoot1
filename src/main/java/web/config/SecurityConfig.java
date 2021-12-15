@@ -11,11 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import web.model.Role;
-import web.model.User;
-import web.service.UserServiceImpl;
-
-import java.util.HashSet;
 
 @Configuration
 @EnableWebSecurity

@@ -22,5 +22,4 @@ public class UserController {
         model.addAttribute("messages", messages);
         return "hello-user";
     }
-
 }

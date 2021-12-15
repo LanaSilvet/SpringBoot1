@@ -3,7 +3,6 @@ package web.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "roles")
@@ -11,7 +10,7 @@ public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_generator")
-    @SequenceGenerator(name="role_generator", sequenceName = "role_seq", allocationSize = 1, initialValue = 2)
+    @SequenceGenerator(name = "role_generator", sequenceName = "role_seq", allocationSize = 1, initialValue = 2)
     private int id;
 
     @Column
