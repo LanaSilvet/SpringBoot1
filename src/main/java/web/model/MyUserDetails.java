@@ -8,27 +8,27 @@ import java.util.Set;
 
 public class MyUserDetails implements UserDetails {
 
-    User user;
-    Set<Role> roles;
+    private UserDto userDto;
+    private Set<RoleDto> roleDtos;
 
-    public MyUserDetails(User user, Set<Role> roles) {
-        this.user = user;
-        this.roles = roles;
+    public MyUserDetails(UserDto userDto, Set<RoleDto> roleDtos) {
+        this.userDto = userDto;
+        this.roleDtos = roleDtos;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return roleDtos;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return userDto.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getName();
+        return userDto.getName();
     }
 
     @Override

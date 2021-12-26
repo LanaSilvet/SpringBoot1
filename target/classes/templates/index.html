@@ -33,19 +33,19 @@
         <th>Role/s</th>
     </tr>
 
-    <tr th:each="user, state : ${users}"
+    <tr th:each="userDto, state : ${users}"
         class="row" th:classappend="${state.odd} ? 'odd-row' : 'even-row'">
-        <td th:utext="${user.getId()}">Id</td>
-        <td th:utext="${user.getName()}">Name</td>
-        <td th:utext="${user.getEmail()}">Email</td>
-        <td th:utext="${user.getStringRoles()}">Roles</td>
-        <td><a th:href="@{/admin/edit/{id}(id=${user.id})}">Edit</a></td>
-        <td><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a></td>
+        <td th:utext="${userDto.getId()}">Id</td>
+        <td th:utext="${userDto.getName()}">Name</td>
+        <td th:utext="${userDto.getEmail()}">Email</td>
+        <td th:utext="${userDto.getStringRoles()}">Roles</td>
+        <td><a th:href="@{/admin/edit/{id}(id=${userDto.id})}">Edit</a></td>
+        <td><a th:href="@{/admin/delete/{id}(id=${userDto.id})}">Delete</a></td>
     </tr>
 </table>
 
 <div>
-<p><a href="/admin/new">Add a new user</a></p>
+<p><a href="/admin/new">Add a new userDto</a></p>
 </div>
 
 <br/>

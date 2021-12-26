@@ -2,37 +2,28 @@ package web.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
+public class RoleDto implements GrantedAuthority {
 
-@Entity
-@Table(name = "roles")
-public class Role implements GrantedAuthority {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_generator")
-    @SequenceGenerator(name = "role_generator", sequenceName = "role_seq", allocationSize = 1, initialValue = 2)
     private int id;
-
-    @Column
     private String role;
 
-    public Role() {
+    public RoleDto() {
     }
 
-    public Role(int id, String role) {
+    public RoleDto(int id, String role) {
         this.id = id;
         this.role = role;
     }
 
-    public Role(int id) {
+    public RoleDto(int id) {
         this.id = id;
     }
 
-    public Role(String role) {
+    public RoleDto(String role) {
         this.role = role;
     }
 
-    public Role(Role role) {
+    public RoleDto(RoleDto roleDto) {
 
     }
 
